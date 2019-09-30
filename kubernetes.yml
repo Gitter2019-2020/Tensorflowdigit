@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tensorflowdigit-backend-service
+spec:
+  selector:
+    app: tensorflowdigit
+    tier: backend
+  ports:
+  - name: "8500"
+    port: 8500
+  - name: "8501"
+    port: 8501
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tensorflowdigit-backend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: tensorflowdigit
+      tier: backend
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: tensorflowdigit
+        tier: backend
+    spec:
+      containers:
+      - name: backend
+        image: gcr.io/tensorflowdigit/backend:v1
+        ports:
+        - containerPort: 8500
+        - containerPort: 8501
+        env:
+          - name: MODEL_NAME
+            value: digits
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tensorflowdigit-frontend-service
+spec:
+  selector:
+    app: tensorflowdigit
+    tier: frontend
+  ports:
+  - port: 80
+    targetPort: 5000
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tensorflowdigit-frontend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: tensorflowdigit
+      tier: frontend
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: tensorflowdigit
+        tier: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: gcr.io/tensorflowdigit/frontend:v1
+        ports:
+        - containerPort: 5000
+        env:
+          - name: BACKEND_IP
+            value: tensorflowdigit-backend-service

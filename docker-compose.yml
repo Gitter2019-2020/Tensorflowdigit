@@ -1,0 +1,20 @@
+version: '3.5'
+services:
+  backend:
+    container_name: back
+    image: gcr.io/tensorflowdigit/backend:v1
+    ports:
+      - 8501:8501
+      - 8500:8500
+    environment:
+      - MODEL_NAME=digits
+
+  frontend:
+    container_name: front
+    image: gcr.io/tensorflowdigit/frontend:v1
+    depends_on:
+      - backend
+    ports:
+      - 5000:5000
+    environment:
+      - BACKEND_IP=backend
