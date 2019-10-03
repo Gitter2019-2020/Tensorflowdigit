@@ -1,17 +1,28 @@
 <html>
     <head>
         <title>
-            MNIST digits
+            TensorflowDigit
         </title>
-        <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" />
         <script type="text/javascript" src="../static/script.js" ></script>
-            
-        </script>
+		<!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
+        <script type="text/javascript" src="../static/drawing.js" ></script>     
+
     </head>
     <body>
-        <input type='file' id="filechooser" onchange="readURL(this);" accept="image/*" />
+   <!--      <input type='file' id="filechooser" onchange="readURL(this);" accept="image/*" />
         <img id="digit" src="#" />
-        <button onclick="uploadFile('{{PREDICT_URL}}');">SEND</button>
-        <input type="text" id="prediction" value="---" readonly>
+        <button onclick="uploadFile('{{PREDICT_URL}}');">SEND</button> -->
+        
+		<div id="canvasDiv" style="background-color:Black;Width:280px;height:280px"></div>
+		
+		
+		<button onclick="predict('{{PREDICT_URL}}');">PREDICT</button>
+		<input type="text" id="prediction" value="---" readonly>
+		<script type="text/javascript"> 
+			$(document).ready(function() {
+				initCanvas();
+			});
+		</script>
     </body>
 </html>
