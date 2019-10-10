@@ -31,9 +31,9 @@ def create_model():
         # layers.MaxPooling2D(pool_size=(2,2)),
         # layers.Dropout(0.25),
         layers.Flatten(input_shape=(28,28,1)),
-        layers.Dense(128, activation='relu'),
-        layers.Dense(64, activation='relu'),
-        layers.Dense(32, activation='relu'),
+        layers.Dense(512, activation='relu'),#256
+        layers.Dense(128, activation='relu'),#64
+        layers.Dense(32, activation='relu'),#extra layer
         layers.Dense(10, activation='softmax')
     ])
 
@@ -50,12 +50,12 @@ def evaluate_model(model, epochs, x_train, y_train, x_test, y_test):
 
     generator = ImageDataGenerator(
         zoom_range=0.5,
-        rotation_range=30,
-        width_shift_range=4,
-        height_shift_range=4)
+        rotation_range=45,#30
+        width_shift_range=6,#4
+        height_shift_range=6)#4
 
     model.fit_generator(generator.flow(x=x_train, y=y_train, batch_size=60),
-        steps_per_epoch=1000,
+        steps_per_epoch=2000,
         epochs=epochs,
         callbacks=[tensorboard_callback],
         validation_data=(x_test, y_test),

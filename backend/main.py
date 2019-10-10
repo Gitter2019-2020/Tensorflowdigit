@@ -2,12 +2,8 @@ import os
 #ignore warning
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-
-import  tensorflow as tf
 from tensorflow.keras import models
-import numpy as np
-
-from training import load_data, display_images, normalize_data, create_model, evaluate_model, preprocess
+from training import load_data, display_images, normalize_data, create_model, evaluate_model
 
 
 x_train, y_train, x_test, y_test = load_data()
