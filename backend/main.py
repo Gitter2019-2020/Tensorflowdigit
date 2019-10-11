@@ -3,19 +3,9 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 from tensorflow.keras import models
-from training import load_data, display_images, normalize_data, create_model, evaluate_model
-
-
-x_train, y_train, x_test, y_test = load_data()
-# display_images(x_train, 5, 5)
-# display_images(x_test, 3, 3)
-
-x_train = normalize_data(x_train)
-#display_images(x_train[0:25,:,:,0]*255, y_train[0:25], 5, 5)
-x_test = normalize_data(x_test)
-#display_images(x_test[0:4,:,:,0]*255, y_test[0:4], 2, 2)
+from training import create_model, evaluate_model
 
 model = create_model()
 model.summary()
-evaluate_model(model, 5, x_train, y_train, x_test, y_test)
+evaluate_model(model, 5, 100, 30)
 models.save_model(model, "./models/digits/1/")

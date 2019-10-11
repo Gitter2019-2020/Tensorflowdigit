@@ -25,23 +25,18 @@
             </tr>
             <tr style="outline: 2px solid lightgray">
                 <td style="text-align: center">
-                    <h2>2. Hit the 'Send Request' button.</h2>
-                    <button onclick="predict('{{PREDICT_URL}}');" style="font-size: 20px">Send Request</button>
+                    <h2>2. Fill in the corresponding label.</h2>
+                    <input id="label" type="text"></input>
                 </td>
             </tr>
             <tr style="outline: 2px solid lightgray">
                 <td style="text-align: center"> 
-                    <h2>3. Response</h2>
-                    <label id="prediction" style="font-size: 60px">-</label>
+                    <h2>3. Hit the 'Add Digit' button.</h2>
+                    <button onclick="add_digit('{{ADD_URL}}');" style="font-size: 20px">Add Digit</button>
                 </td>
             </tr>
         </table>
 
-		
-		
-		
-		
-		
 		<script type="text/javascript"> 
 			$(document).ready(function() {
 				initCanvas();

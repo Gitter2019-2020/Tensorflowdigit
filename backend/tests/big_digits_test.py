@@ -39,9 +39,9 @@ class BigDigitTests(unittest.TestCase):
 
     def test_big_8(self):
         self.__predict_test("./images/280x280/numero8.png", 8)
-
+        
     def test_big_9(self):
-        self.__predict_test("./images/280x280/numero9.png", 9)
+        self.__predict_test("./images/custom imagesVAL/9/9.png", 9)
 
 
 

@@ -9,11 +9,11 @@ var canvasHeight = 280;
 
 function initCanvas()
 {
-	// Create the canvas (Neccessary for IE because it doesn't know what a canvas element is)
 	var canvasDiv = document.getElementById('canvasDiv');
 	
-	canvasX = canvasDiv.offsetLeft;
-	canvasY = canvasDiv.offsetTop;
+	var offset = $('#canvasDiv').offset();
+	canvasX = offset.left;
+	canvasY = offset.top;
 	
 	canvas = document.createElement('canvas');
 	canvas.setAttribute('width', canvasWidth);
@@ -23,27 +23,22 @@ function initCanvas()
 	if(typeof G_vmlCanvasManager != 'undefined') {
 		canvas = G_vmlCanvasManager.initElement(canvas);
 	}
-	context = canvas.getContext("2d"); // Grab the 2d canvas context
-	// Note: The above code is a workaround for IE 8 and lower. Otherwise we could have used:
-	//     context = document.getElementById('canvas').getContext("2d");
+	context = canvas.getContext("2d"); 
 	
 
-	// Add mouse events
-	// ----------------
 	$('#canvas').mousedown(function(e)
 	{
-		// Mouse down location
-		var mouseX = e.pageX - this.offsetLeft;
-		var mouseY = e.pageY - this.offsetTop;
-		
 		paint = true;
+		var mouseX = e.pageX - canvasX;
+		var mouseY = e.pageY - canvasY;
+		
 		addClick(mouseX, mouseY, false);
 		redraw();
 	});
 	
 	$('#canvas').mousemove(function(e){
 		if(paint==true){
-			addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+			addClick(e.pageX - canvasX, e.pageY - canvasY, true);
 			redraw();
 		}
 	});
@@ -58,12 +53,6 @@ function initCanvas()
 	});
 }
 
-/**
-* Adds a point to the drawing array.
-* @param x
-* @param y
-* @param dragging
-*/
 function addClick(x, y, dragging)
 {
 	clickX.push(x);
@@ -88,20 +77,19 @@ function redraw()
 	for(; i < clickX.length; i++)
 	{		
 		context.beginPath();
-		if(clickDrag[i] && i){
+		if(clickDrag[i] && i)
 			context.moveTo(clickX[i-1], clickY[i-1]);
-		}else{
+		else
 			context.moveTo(clickX[i], clickY[i]);
-		}
+		
 		context.lineTo(clickX[i], clickY[i]);
 		context.closePath();
 		context.stroke();
-		
 	}
 }
 
 function getData(){
-	var imgd = context.getImageData(canvasX, canvasY, canvasWidth, canvasHeight);
+	var imgd = context.getImageData(0, 0, canvasWidth, canvasHeight);
 	var pixels = imgd.data;
 	
 	var gray = new Array(canvasWidth);
@@ -127,10 +115,29 @@ function predict(url){
         processData: false,
         contentType: false,
         success: function(response) {
-            $('#prediction')[0].value = response
+            $('#prediction')[0].textContent = response
         },
         error: function(jqXHR, textStatus, errorMessage) {
-            console.log(errorMessage); // Optional
+            console.log(errorMessage); 
+        }
+    });
+}
+
+function add_digit(url){
+
+	var gray = getData();
+	var txt = $('#label')[0].value
+	$.ajax({
+        url: url,
+        type: "POST",
+        data: JSON.stringify({data:gray, label:txt}),
+        dataType: "text",
+        processData: false,
+        contentType: false,
+        success: function(response) {
+        },
+        error: function(jqXHR, textStatus, errorMessage) {
+            console.log(errorMessage); 
         }
     });
 }
