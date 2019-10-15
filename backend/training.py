@@ -11,6 +11,7 @@ from numpy import mean, std, expand_dims
 def create_model():
     model = Sequential([
         layers.Flatten(input_shape=(28,28,1)),
+        layers.Dense(512, activation='relu'),
         layers.Dense(128, activation='relu'),
         layers.Dense(32, activation='relu'),
         layers.Dense(10, activation='softmax')
@@ -31,7 +32,10 @@ def evaluate_model(model, epochs, steps_per_epoch, batch_size):
         rescale=1./255,
         data_format="channels_last",
         zoom_range=0.4,
-        rotation_range=45)
+        shear_range=0.2,
+        rotation_range=45,
+        width_shift_range=3,
+        height_shift_range=3)
 
     training_it = gen.flow_from_directory(
         "./images/training",

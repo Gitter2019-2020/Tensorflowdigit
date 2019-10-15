@@ -10,26 +10,27 @@
 
     </head>
     <body>
-        <table style="margin: auto; padding: 15px;border-spacing: 15px">
+        <table style="margin: auto; padding: 0px;border-spacing: 15px; text-align: center; width: 600px;">
             <tr>
                 <td>
-                    <h1>TensorflowDigit : My First ML Project</h1>
+                    <h1>TensorflowDigit :</h1>
+                    <h1>My First Machine Learning Project</h1>
                 </td>
             </tr>
 
-            <tr style="outline: 2px solid lightgray">
+            <tr style="background-color: lightgrey;">
                 <td style="text-align: center">
                     <h2>1. Draw a digit on the black canvas below.</h2>
                     <div id="canvasDiv" style="background-color:Black;Width:280px;height:280px;margin:auto"></div>
                 </td>
             </tr>
-            <tr style="outline: 2px solid lightgray">
+            <tr style="background-color: lightgrey;">
                 <td style="text-align: center">
                     <h2>2. Hit the 'Send Request' button.</h2>
                     <button onclick="predict('{{PREDICT_URL}}');" style="font-size: 20px">Send Request</button>
                 </td>
             </tr>
-            <tr style="outline: 2px solid lightgray">
+            <tr style="background-color: lightgrey;">
                 <td style="text-align: center"> 
                     <h2>3. Response</h2>
                     <label id="prediction" style="font-size: 60px">-</label>
